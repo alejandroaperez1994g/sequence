@@ -4,7 +4,12 @@ import config from './config/config'
 
 const { PORT } = config.development.app
 
-app.listen(PORT, async (): Promise<void> => {
+const startServer = async () => {
   await connect()
-  console.log(`Server listening on port ${PORT}`)
-})
+
+  app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`)
+  })
+}
+
+void startServer()
