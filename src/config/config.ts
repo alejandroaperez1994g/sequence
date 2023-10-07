@@ -9,6 +9,7 @@ interface TConfig {
 interface EnvironmentConfig {
   app: AppConfig
   auth: AUTH
+  db: DB
 }
 
 interface AppConfig {
@@ -20,6 +21,10 @@ interface AUTH {
   refreshTokenSecret: string
 }
 
+interface DB {
+  uri: string
+}
+
 const CONFIG: TConfig = {
   development: {
     app: {
@@ -28,6 +33,9 @@ const CONFIG: TConfig = {
     auth: {
       tokenSecret: process.env.TOKEN_SECRET ?? 'secret',
       refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET ?? 'refresh_secret'
+    },
+    db: {
+      uri: process.env.MONGODB_URI ?? 'mongodb://mongodb/{your_db_name}'
     }
 
   }
