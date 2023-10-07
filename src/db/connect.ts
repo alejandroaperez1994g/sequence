@@ -8,7 +8,6 @@ export const connect = async () => {
     await mongoose.connect(`${uri}`)
     console.log('Connected to MongoDB')
   } catch (e) {
-    console.log(e)
-    throw new Error('Error connecting to MongoDB')
+    throw new Error((e as Error).message)
   }
 }
