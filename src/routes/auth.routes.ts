@@ -4,7 +4,7 @@ import { createJWT, refreshJWT } from '../controllers/auth.controllers'
 const AuthRoutes = Router()
 
 AuthRoutes
-  .post('/', createJWT)
+  .get('/', createJWT)
   .post('/refresh', refreshJWT)
 
 export default AuthRoutes

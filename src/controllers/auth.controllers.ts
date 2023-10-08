@@ -6,7 +6,7 @@ const { tokenSecret, refreshTokenSecret } = config.development.auth
 const refreshTokens: string[] = []
 
 export const createJWT = (req: Request, res: Response): void => {
-  const { name } = req.body as { name: string }
+  const name = 'John'
 
   const token = jwt.sign({ name }, tokenSecret, { expiresIn: '10m' })
   const refreshToken = jwt.sign({ name }, refreshTokenSecret)
@@ -21,8 +21,8 @@ interface DecodedToken {
 
 export const refreshJWT = (req: Request, res: Response) => {
   const { refreshToken } = req.body as { refreshToken: string }
-  if (refreshToken === null) return res.status(401).send({ message: 'Unauthorized: No token found!' })
-  if (!refreshTokens.includes(refreshToken)) return res.status(403).send({ message: 'Forbidden: Invalid token' })
+  if (refreshToken === undefined) return res.status(401).send({ message: 'Unauthorized: No token found!' })
+  if (!refreshTokens.includes(refreshToken)) return res.status(401).send({ message: 'Unauthorized: Invalid token' })
 
   try {
     const decoded = jwt.verify(refreshToken, refreshTokenSecret) as DecodedToken
