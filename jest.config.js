@@ -4,6 +4,6 @@ module.exports = {
   testEnvironment: 'node',
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.ts"],
-    coverageDirectory: "coverage",
-
+  coverageDirectory: "coverage",
+  verbose: true,
 };
