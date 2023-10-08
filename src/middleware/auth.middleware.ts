@@ -7,15 +7,11 @@ const { tokenSecret } = config.development.auth
 export const verifyJWT = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization as string
 
-  if (authHeader === null || !authHeader.startsWith('Bearer ')) {
+  if (authHeader === undefined || !authHeader.startsWith('Bearer ')) {
     return res.status(401).send({ message: 'Unauthorized: Invalid token format' })
   }
 
   const token = authHeader.split(' ')[1]
-
-  if (token !== null) {
-    return res.status(401).send({ message: 'Unauthorized: No token provided' })
-  }
 
   jwt.verify(token, tokenSecret, (error: jwt.JsonWebTokenError | null) => {
     if (error != null) {
