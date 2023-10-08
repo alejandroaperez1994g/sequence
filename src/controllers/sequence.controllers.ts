@@ -5,7 +5,7 @@ import sequenceModel from '../models/sequence.model'
 export const createSequence = async (req: Request, res: Response) => {
   const { sequence } = req.body as { sequence: string[] }
 
-  if (sequence === undefined) res.status(400).send({ message: 'Bad Request: Sequence is required' })
+  if (sequence === undefined || !Array.isArray(sequence)) return res.status(400).send({ message: 'Bad Request: Sequence is required' })
   try {
     const subSequence = generateSubsequences(sequence)
 
