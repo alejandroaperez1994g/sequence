@@ -19,7 +19,8 @@ export const createSequence = async (req: Request, res: Response) => {
 
 export const getSubSequences = async (_: Request, res: Response) => {
   try {
-    const subSequences = await sequenceModel.find({}, { subsequence: 1, _id: 0 })
+    const subSequences = await sequenceModel.find({})
+    if (subSequences.length === 0) return res.status(404).send({ message: 'Not Found: No sequence found' })
     const originalSequence = subSequences[0].subsequence[subSequences[0].subsequence.length - 1]
     res.status(200).send({ originalSequence, subSequences })
   } catch (error) {
