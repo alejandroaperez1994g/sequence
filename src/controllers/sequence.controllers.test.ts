@@ -1,16 +1,20 @@
-import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
 import request, { type Response } from 'supertest'
-import app from '../../server'
-import config from '../../config/config'
+import app from '../server'
+import config from '../config/config'
+import { cleanData, connect, disconnect } from '../__helper__/mongodb.server.test.helper'
 
 describe('Sequence Controller', () => {
   beforeAll(async () => {
-    await mongoose.connect('mongodb://localhost:27018/docker')
+    await connect()
+  })
+
+  beforeEach(async () => {
+    await cleanData()
   })
 
   afterAll(async () => {
-    await mongoose.connection.close()
+    await disconnect()
   })
 
   describe('GET /api/v1/sequence', () => {
@@ -24,10 +28,22 @@ describe('Sequence Controller', () => {
         .set('Authorization', `Bearer ${validToken}`)
     })
 
-    it('should give a 200 status', () => {
-      expect(response.status).toBe(200)
+    it('should give a 404 status if the database is empty', () => {
+      expect(response.status).toBe(404)
     })
-    it('should return an object with originalSequence & subSequences', () => {
+    it('should return the subsequences and original sequence if the database is populated', async () => {
+      const data = { name: 'John' }
+      const validToken = jwt.sign(data, config.development.auth.tokenSecret)
+      await request(app)
+        .post('/api/v1/sequence')
+        .set('Authorization', `Bearer ${validToken}`)
+        .send({ sequence: [1, 2] })
+
+      const response = await request(app)
+        .get('/api/v1/sequence')
+        .set('Authorization', `Bearer ${validToken}`)
+
+      expect(response.status).toBe(200)
       expect(response.body).toHaveProperty('originalSequence')
       expect(response.body).toHaveProperty('subSequences')
     })

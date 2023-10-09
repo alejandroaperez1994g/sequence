@@ -1,7 +1,7 @@
 import request from 'supertest'
-import app from '../../server'
+import app from '../server'
 import jwt from 'jsonwebtoken'
-import config from '../../config/config'
+import config from '../config/config'
 
 describe('verify jwt middleware', () => {
   it('should return 401 status code if no token is provided', async () => {

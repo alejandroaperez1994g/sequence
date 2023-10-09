@@ -1,4 +1,4 @@
-import { generateSubsequences } from '../index'
+import { generateSubsequences } from './index'
 
 describe('generateSubsequences function', () => {
   it('should generate all subsequences of a given array', () => {

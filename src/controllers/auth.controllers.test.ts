@@ -1,5 +1,5 @@
 import request, { type Response } from 'supertest'
-import app from '../../server'
+import app from '../server'
 
 describe('Auth Controller', () => {
   describe('GET /api/v1/jwt', () => {
