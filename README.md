@@ -97,7 +97,7 @@ The project's directory structure is as follows:
 
 - Sequence Creation: `/api/v1/sequence`
     - Allows creating a new sequence and generating subsequences from it.
-- Subsequence Retrieval: `/api/v1/sequence/subsequences`
+- Subsequence Retrieval: `/api/v1/sequence`
     - Allows fetching previously generated subsequences and the original sequence.
 
 ## Data Model
